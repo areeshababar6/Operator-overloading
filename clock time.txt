@@ -1,0 +1,238 @@
+#include <iostream>
+using namespace std;
+
+class Clock
+{
+private:
+	int s;
+	int m;
+	int h;
+public:
+	Clock();
+	Clock(int, int, int);
+	void display();
+	void setS(int);
+	void setM(int);
+	void setH(int);
+	int getS();
+	int getM();
+	int getH();
+
+	Clock operator+(const Clock& c);
+	Clock operator-(const Clock& c);
+
+	bool operator==(const Clock&);
+	bool operator!=(const Clock&);
+	bool operator>=(const Clock&);
+	bool operator>(const Clock&);
+	bool operator<(const Clock&);
+	bool operator<=(const Clock&);
+
+	void operator++(int);
+	void operator--(int);
+};
+
+Clock::Clock()
+{
+	s = 0; m = 0; h = 0;
+}
+Clock::Clock(int seconds, int minutes, int hours)
+{
+	s = seconds;
+	m = minutes;
+	h = hours;
+}
+void Clock::display()
+{
+	cout << "HH-MM-SS " << h << " - " << m << " - " << s << endl;
+}
+Clock Clock::operator+(const Clock& c)
+{
+	Clock c1;
+
+	c1.s = s + c.s;
+		c1.m = m + c.m;
+		c1.h = h + c.h;
+
+		if (c1.s > 59)
+		{
+			c1.s = c1.s - 60;
+			c1.m++;
+		}
+		if (c1.m > 59)
+		{
+			c1.m = c1.m - 60;
+			c1.h++;
+		}
+		if (c1.h > 23)
+		{
+			c1.h = c1.h - 24;
+		}
+
+		return c1;
+}
+Clock Clock::operator-(const Clock& c)
+{
+		Clock c1;
+
+		c1.s = s - c.s;
+		c1.m = m - c.m;
+		c1.h = h - c.h;
+
+		if (c1.s < 0)
+		{
+			c1.s = c1.s + 60;
+			c1.m--;
+		}
+		if (c1.m < 0)
+		{
+			c1.m = c1.m + 60;
+			h--;
+		}
+		if (c1.h < 0)
+		{
+			c1.h = c1.h + 24;
+		}
+
+		return c1;
+}
+void Clock::setS(int S)
+{
+	s = S;
+}
+void Clock::setM(int S)
+{
+	m = S;
+}
+void Clock::setH(int S)
+{
+	h = S;
+}
+int Clock::getS()
+{
+	return s;
+}
+int Clock::getM()
+{
+	return m;
+}
+int Clock::getH()
+{
+	return h;
+}
+bool Clock::operator==(const Clock& c)
+{
+	if (s == c.s && m == c.m && h == c.h)
+		return true;
+	else
+		return false;
+}
+bool Clock::operator!=(const Clock& c)
+{
+	if (s != c.s && m != c.m && h != c.h)
+		return true;
+	else
+		return false;
+}
+bool Clock::operator>=(const Clock& c)
+{
+	if (s >= c.s && m >= c.m && h >= c.h)
+		return true;
+	else
+		return false;
+}
+bool Clock::operator<=(const Clock& c)
+{
+	if (s <= c.s && m <= c.m && h <= c.h)
+		return true;
+	else
+		return false;
+}
+bool Clock::operator<(const Clock& c)
+{
+	if (s < c.s && m < c.m && h < c.h)
+		return true;
+	else
+		return false;
+}
+bool Clock::operator>(const Clock& c)
+{
+	if (s > c.s && m > c.m && h > c.h)
+		return true;
+	else
+		return false;
+}
+void Clock::operator++(int i)
+{
+	s++;
+	m++;
+	h++;
+
+	if (s > 59)
+	{
+		m++;
+		s = 0;
+	}
+	if (m > 59)
+	{
+		h++;
+		m = 0;
+	}
+	if (h > 23)
+	{
+		h = 0;
+	}
+}
+void Clock::operator--(int i)
+{
+	s--; m--; h--;
+
+	if (s < 0)
+	{
+		m--;
+		s = 59;
+	}
+	if (m < 0)
+	{
+		h = 0;
+		h--;
+	}
+	if (h < 0)
+	{
+		h = 23;
+	}
+}
+
+int main()
+{
+	Clock c1(23, 45, 12);
+	Clock c2(56, 34, 23);
+
+	Clock c;
+
+	c = c1 + c2;
+	c.display();
+
+	c = c1 - c2;
+	c.display();
+
+	c++;
+	c.display();
+
+	c--;
+	c.display();
+
+	if (c1 == c1)
+		cout << " Time are equal!" << endl;
+
+	if (c != c1)
+		cout << " C1 is not equal." << endl;
+
+	if (c1 < c2)
+		cout << " C1 is smaller" << endl;
+
+	if (c2 > c)
+		cout << " C2 is greater" << endl;
+
+	return 0;
+}

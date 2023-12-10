@@ -1,0 +1,96 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+class PhoneNumber
+{
+private:
+	string Fname;
+	string Lname;
+	string num;
+public:
+	PhoneNumber(string = "Null", string = "Null", string = "Null");
+	void setValues(string, string, string);
+	string getF();
+	string getL();
+	string getN();
+
+	friend ostream& operator<<(ostream&, PhoneNumber&);
+	friend istream& operator>>(istream&, PhoneNumber&);
+};
+PhoneNumber::PhoneNumber(string fn, string ln, string n)
+{
+	Fname = fn; Lname = ln; num = n;
+}
+void PhoneNumber::setValues(string fn, string ln, string n)
+{
+	Fname = fn; Lname = ln; num = n;
+}
+string PhoneNumber::getF()
+{
+	return Fname;
+}
+string PhoneNumber::getL()
+{
+	return Lname;
+}
+string PhoneNumber::getN()
+{
+	return num;
+}
+
+ostream& operator<<(ostream& out, PhoneNumber& p)
+{
+	out << " First name: " << p.getF() << endl;
+	out << " Last name: " << p.getL() << endl;
+	out << " Phone number: " << p.getN() << endl;
+
+	return out;
+}
+istream& operator>>(istream& in, PhoneNumber& p)
+{
+	string fn, ln, n;
+
+	cout << " Enter First name: ";
+	in >> fn;
+	cout << " Enter Last name: ";
+	in >> ln;
+	cout << " Enter phone number: ";
+	in >> n;
+
+	p.setValues(fn, ln, n);
+
+	return in;
+}
+
+int main()
+{
+	PhoneNumber p;
+
+	cin >> p;
+	cout << p;
+
+	PhoneNumber* p1;
+
+	int n;
+	cout << " Enter size of array: ";
+	cin >> n;
+
+	p1 = new PhoneNumber[n];
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << " Enter for " << i + 1 << ": \n";
+		cin >> p1[i];
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << "\n Value at index " << i + 1 << ": \n";
+		cout << p1[i] << endl;
+	}
+
+
+	return 0;
+}

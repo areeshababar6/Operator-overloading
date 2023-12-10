@@ -1,0 +1,156 @@
+#include <iostream>
+using namespace std;
+
+class complex
+{
+private:
+	int real;
+	int imag;
+public:
+	complex(int = 0, int = 0);
+	void input(int, int);
+	void display();
+	complex operator+(const complex&);
+	complex operator-(const complex&);
+	complex operator*(const complex&);
+	complex operator/(const complex&);
+	bool operator==(const complex&);
+	bool operator!=(const complex&);
+	bool operator<=(const complex&);
+	bool operator>=(const complex&);
+	bool operator<(const complex&);
+	bool operator>(const complex&);
+};
+complex::complex(int r, int i)
+{
+	real = r; imag = i;
+}
+bool complex::operator==(const complex& c)
+{
+	if (real == c.real && imag == c.imag)
+		return true;
+	else
+		return false;
+}
+bool complex::operator!=(const complex& c)
+{
+	if (real != c.real && imag != c.imag)
+		return true;
+	else
+		return false;
+}
+bool complex::operator>=(const complex& c)
+{
+	if (real >= c.real && imag >= c.imag)
+		return true;
+	else
+		return false;
+}
+bool complex::operator<=(const complex& c)
+{
+	if (real <= c.real && imag <= c.imag)
+		return true;
+	else
+		return false;
+}
+bool complex::operator<(const complex& c)
+{
+	if (real < c.real && imag < c.imag)
+		return true;
+	else
+		return false;
+}
+bool complex::operator>(const complex& c)
+{
+	if (real > c.real && imag > c.imag)
+		return true;
+	else
+		return false;
+}
+void complex::input(int r, int i)
+{
+	real = r; imag = i;
+}
+complex complex::operator+(const complex& c)
+{
+	complex c1;
+
+	c1.real = real + c.real;
+	c1.imag = imag + c.imag;
+
+	return c1;
+}
+complex complex::operator-(const complex& c)
+{
+	complex c1;
+
+	c1.real = real - c.real;
+	c1.imag = imag - c.imag;
+
+	return c1;
+}
+complex complex::operator*(const complex& c)
+{
+	complex c1;
+
+	c1.real = real * c.real - imag * c.imag;
+	c1.imag = real * c.imag + c.real * imag;
+
+	return c1;
+}
+complex complex::operator/(const complex& c)
+{
+	complex c1;
+
+	c1.real = (real * c.real + imag * c.imag) / (c.real * c.real + c.imag * c.imag);
+	c1.imag = (real * c.imag - c.real * imag) / (c.real * c.real + c.imag * c.imag);
+
+	return c1;
+}
+void complex::display()
+{
+	cout << " Real: " << real << endl;
+	cout << " Imaginary: " << imag << endl;
+}
+int main()
+{
+	complex c1(2, 3);
+	complex c2(-6, -7);
+
+	complex c3;
+
+	c3 = c1 + c2;
+	c3.display();
+
+
+	c3 = c1 - c2;
+	c3.display();
+
+	c3 = c1 * c2;
+	c3.display();
+
+	c3 = c1 / c2;
+	c3.display();
+
+	if (c1 == c2)
+		cout << " Equal!" << endl;
+	else
+		cout << " Not equal!" << endl;
+	
+	if (c1 != c3)
+		cout << " C1 & C3 are not Equal!" << endl;
+	else
+		cout << " C1 & C3 are Equal!" << endl;
+	
+	if (c1 >= c3)
+		cout << " C1 is greater or equal." << endl;
+	else
+		cout << " C3 is greater or equal." << endl;
+
+	if (c1 <= c2)
+		cout << " C2 is greater or equal." << endl;
+	else
+		cout << " C1 is greater or equal." << endl;
+
+	return 0;
+}

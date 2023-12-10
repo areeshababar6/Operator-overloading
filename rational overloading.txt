@@ -1,0 +1,217 @@
+#include <iostream>
+using namespace std;
+
+class rational
+{
+private:
+	int n;
+	int d;
+public:
+	rational();
+	rational(int, int);
+	void Reduce();
+
+	rational operator+(const rational&);
+	rational operator-(const rational&);
+	rational operator*(const rational&);
+	rational operator/(const rational&);
+
+	bool operator==(const rational&);
+	bool operator!=(const rational&);
+	bool operator>(const rational&);
+	bool operator<(const rational&);
+	bool operator>=(const rational&);
+	bool operator<=(const rational&);
+
+	void operator++(int);   //Post
+	void operator--(int);    //Post
+
+	void operator++();      //Pre
+	void operator--();       //Pre
+
+	void display()
+	{
+		cout << n << " / " << d << endl;
+	}
+};
+void rational::operator++(int i)
+{
+	n = n + d;
+}
+void rational::operator--(int i)
+{
+	n = n - d;
+}
+void rational::operator++()
+{
+	n = n + d;
+}
+void rational::operator--()
+{
+	n = n - d;
+}
+bool rational::operator==(const rational& r)
+{
+	if (n == r.n && d == r.d)
+		return true;
+	else 
+		return false;
+}
+rational::rational()
+{
+	n = 0; d = 1;
+}
+rational::rational(int num, int den)
+{
+	n = num; d = den;
+}
+void rational::Reduce()
+{
+	int i;
+	
+	do
+	{
+		for (i = 2; i <= 20; i++)
+		{
+			if (n % i == 0 && d % i == 0)
+			{
+				n = n / i;
+				d = d / i;
+
+				break;
+			}
+		}
+
+		
+	} while (i <= 20);
+}
+rational rational::operator*(const rational& r)
+{
+	rational r1;
+
+	r1.n = n * r.n;
+	r1.d = d * r.d;
+
+	r1.Reduce();
+
+	return r1;
+}
+rational rational::operator/(const rational& r)
+{
+	rational r1;
+
+	r1.n = n * r.d;
+	r1.d = d * r.n;
+
+	r1.Reduce();
+
+	return r1;
+}
+rational rational::operator-(const rational& r)
+{
+	rational r1;
+
+	r1.n = n * r.d - d * r.n;
+	r1.d = d * r.d;
+
+	r1.Reduce();
+
+	return r1;
+}
+rational rational::operator+(const rational& r)
+{
+	rational r1;
+
+	r1.n = n * r.d + d * r.n;
+	r1.d = d * r.d;
+
+	r1.Reduce();
+
+	return r1;
+}
+bool rational::operator!=(const rational& r)
+{
+	if (n != r.n && d != r.d)
+		return true;
+	else
+		return false;
+}
+bool rational::operator<=(const rational& r)
+{
+	if (n <= r.n && d <= r.d)
+		return true;
+	else
+		return false;
+}
+bool rational::operator>=(const rational& r)
+{
+	if (n >= r.n && d >= r.d)
+		return true;
+	else
+		return false;
+}
+bool rational::operator<(const rational& r)
+{
+	if (n < r.n && d < r.d)
+		return true;
+	else
+		return false;
+}
+bool rational::operator>(const rational& r)
+{
+	if (n > r.n && d > r.d)
+		return true;
+	else
+		return false;
+}
+
+int main()
+{
+	rational r1(4, 8);
+	rational r2(2, 3);
+
+	r1.Reduce();
+	r1.display();
+
+	rational r;
+	
+	r = r1 + r2;
+	r.display();
+	r = r1 - r2;
+	r.display();
+	r = r1 * r2;
+	r.display();
+	r = r1 / r2;
+	r.display();
+
+	if (r1 == r2)
+		cout << " R1 and R2 are equal" << endl;
+
+	if (r1 != r2)
+		cout << " R1 and R2 are not equal" << endl;
+
+
+	if (r1 > r)
+		cout << " R1 is greater" << endl;
+	else
+		cout << " R is greater" << endl;
+
+	if (r1 <= r)
+		cout << " R is greater" << endl;
+	else
+		cout << " R1 is greater" << endl;
+
+	r++;
+	r.display();
+
+	r--;
+	r.display();
+
+	++r1;
+	r1.display();
+
+	--r1;
+	r1.display();
+
+	return 0;
+}
